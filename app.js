@@ -1,6 +1,7 @@
 // app.js
 const buidlBuxAbi = require('./abi/ERC20');
 
+// List of vendors
 vendors = [
     "0x2406fb7143f22f221e74524aa25bd0f7ffa6ba66",
     "0x8ce80adea55f41d874398b2ef80c31216b929521",
@@ -22,47 +23,18 @@ vendors = [
     "0x31edd5a882583cbf3a712e98e100ef34ad6934b4"
 ]
 
-const ethers = require('ethers');
-const constants = require('constants')
-
 const express = require('express');
 const app = express();
 const port = 3000;
 
 const vendorController = require('./controllers/vendorController');
+const transactionController = require('./controllers/transactionController');
 
 app.use(express.json());
 
 app.use('/vendors', vendorController);
+app.use('/transactions', transactionController);
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
-
-const provider = new ethers.JsonRpcProvider("https://zksync2-mainnet.zksync.io");
-const buidlTokenAddress = '0xEd0994232328B470d44a88485B430b8bA965D434'
-const transferEvent = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-const contract = new ethers.Contract(buidlTokenAddress, buidlBuxAbi, provider);
-
-const getAllTransactions = async() => {
-    const transactions = await contract.queryFilter(transferEvent, 0);
-    //console.log(transactions)
-    let transfers = [];
-    for (let i=0; i < transactions.length; i++) {
-        console.log("0x"+transactions[i]['topics'][2].slice(26, 66))
-        if (vendors.includes("0x"+transactions[i]['topics'][2].slice(26, 66))) {
-            console.log(transactions[i]['transactionHash'])
-            console.log("0x"+transactions[i]['topics'][2].slice(26, 66))
-            console.log(parseInt(transactions[i]['data'], 16))
-            transfers.push({
-                "transactionHash": transactions[i]['transactionHash'],
-                "to": "0x"+transactions[i]['topics'][2].slice(26, 66),
-                "amount": parseInt(transactions[i]['data'], 16)
-            });
-        }
-    }
-    console.log(transfers);
-    return transactions;
-}
-
-const transactions = getAllTransactions();

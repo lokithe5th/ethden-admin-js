@@ -18,5 +18,3 @@ vendors = [
     "0x8360F4F9Ba02a131757EAFECE17bc814313a61de",
     "0x31edD5A882583CBf3A712E98E100Ef34aD6934b4"
 ]
-
-module.exports = vendors
