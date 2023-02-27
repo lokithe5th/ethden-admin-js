@@ -1,5 +1,11 @@
 // app.js
+const express = require('express');
+const app = express();
+const port = 3000;
+
+const ethers = require('ethers');
 const buidlBuxAbi = require('./abi/ERC20');
+const transactionModel = require('./models/transactionModel');
 
 // List of vendors
 vendors = [
@@ -23,10 +29,6 @@ vendors = [
     "0x31edd5a882583cbf3a712e98e100ef34ad6934b4"
 ]
 
-const express = require('express');
-const app = express();
-const port = 3000;
-
 const vendorController = require('./controllers/vendorController');
 const transactionController = require('./controllers/transactionController');
 
@@ -38,3 +40,16 @@ app.use('/transactions', transactionController);
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
+
+
+// Let's listen for more events - is this better taken care of on the front end?
+const provider = new ethers.JsonRpcProvider("https://zksync2-mainnet.zksync.io");
+const buidlTokenAddress = '0xEd0994232328B470d44a88485B430b8bA965D434'
+const transferEvent = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+const contract = new ethers.Contract(buidlTokenAddress, buidlBuxAbi, provider);
+
+contract.on("Transfer", (from, to, amount, event) => {
+  if (vendors.includes(to)) {
+    let result = transactionModel.addTransaction({event});
+  }
+}) 
