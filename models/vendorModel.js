@@ -1,6 +1,6 @@
 // models/vendorModel.js
 
-const { MongoClient, ObjectID } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const url = 'mongodb+srv://lourens:eHWJqpSLr3ViOHQh@cluster0.iwy9lj6.mongodb.net/denver?retryWrites=true&w=majority';
 
@@ -22,7 +22,8 @@ class VendorModel {
 
   async updateVendor(id, update) {
     //  `update` should be in the format `{payoutsReceived: $value}`
-    const result = await this.collection.updateOne({ _id: ObjectID(id) }, { $set: update });
+    const recordId = new ObjectId(id);
+    const result = await this.collection.updateOne({ _id: recordId }, { $set: update });
     return result;
   }
 }

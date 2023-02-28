@@ -15,8 +15,10 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
+  console.log("incoming request");
   const id = req.params.id;
   const update = req.body;
+  //console.log(req);
 
   try {
     const result = await vendorModel.updateVendor(id, update);
