@@ -14,6 +14,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.put('/resetPayouts/:id', async (req, res) => {
+  console.log("incoming reset");
+  const id = req.params.id;
+  const update = req.body;
+
+  try {
+    const result = await vendorModel.resetPayouts();
+    res.status(200).send('Vendors reset successfully');
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error reset vendor in database');
+  }
+});
+
 router.put('/:id', async (req, res) => {
   console.log("incoming request");
   const id = req.params.id;
