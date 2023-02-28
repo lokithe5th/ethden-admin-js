@@ -48,8 +48,27 @@ const buidlTokenAddress = '0xEd0994232328B470d44a88485B430b8bA965D434'
 const transferEvent = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 const contract = new ethers.Contract(buidlTokenAddress, buidlBuxAbi, provider);
 
+/*
 contract.on("Transfer", (from, to, amount, event) => {
   if (vendors.includes(to)) {
     let result = transactionModel.addTransaction({event});
   }
-}) 
+})
+
+const getAllTransactions = async() => {
+  const transactions = await contract.queryFilter(transferEvent, 0);
+  let transfers = [];
+
+  for (let i=0; i < transactions.length; i++) {
+      if (vendors.includes("0x"+transactions[i]['topics'][2].slice(26, 66))) {
+        transfers.push(transactions[i]);
+        //await transactionModel.addTransaction(transactions[i]);
+      }
+  }
+
+  console.log(transfers);
+
+  return transfers;
+}
+
+getAllTransactions(); */

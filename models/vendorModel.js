@@ -11,7 +11,6 @@ class VendorModel {
       .then(client => {
         const db = client.db();
         this.collection = db.collection('payments');
-        console.log(this.collection)
       })
       .catch(err => console.error(err));
   }
@@ -22,6 +21,7 @@ class VendorModel {
   }
 
   async updateVendor(id, update) {
+    //  `update` should be in the format `{payoutsReceived: $value}`
     const result = await this.collection.updateOne({ _id: ObjectID(id) }, { $set: update });
     return result;
   }
