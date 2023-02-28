@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const port = process.env.port | 3000;
+const port = process.env.PORT | 3000;
 
 const vendorController = require('./controllers/vendorController');
 const transactionController = require('./controllers/transactionController');
@@ -14,5 +14,5 @@ app.use('/vendors', vendorController);
 app.use('/transactions', transactionController);
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`App listening at :${port}`);
 });
