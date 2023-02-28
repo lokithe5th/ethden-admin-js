@@ -13,6 +13,6 @@ app.use(cors());
 app.use('/vendors', vendorController);
 app.use('/transactions', transactionController);
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
   console.log(`App listening at :${port}`);
 });
