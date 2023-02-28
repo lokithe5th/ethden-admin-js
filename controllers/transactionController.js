@@ -5,8 +5,6 @@ const router = express.Router();
 const ethers = require('ethers');
 
 const erc20 = require('../abi/ERC20.json');
-//const transactionModel = require('../models/transactionModel');
-//const transactionModel = require('./blockchainController');
 
 // Let's listen for more events - is this better taken care of on the front end?
 const provider = new ethers.JsonRpcProvider("https://zksync2-mainnet.zksync.io");
@@ -35,13 +33,6 @@ vendors = [
   "0x31edd5a882583cbf3a712e98e100ef34ad6934b4"
 ]
 
-/*
-contract.on("Transfer", (from, to, amount, event) => {
-  if (vendors.includes(to)) {
-    let result = transactionModel.addTransaction({event});
-  }
-})*/
-
 const getAllTransactions = async() => {
   const transactions = await contract.queryFilter(transferEvent, 0);
   let transfers = [];
@@ -54,7 +45,6 @@ const getAllTransactions = async() => {
           amount: parseInt(transactions[i]['data'], 16)
         }
         transfers.push(event);
-        //await transactionModel.addTransaction(transactions[i]);
       }
   }
 
@@ -72,25 +62,5 @@ router.get('/', async (req, res) => {
     res.status(500).send('Error retrieving transactions from database');
   }
 });
-
-/*
-router.put('/addTx', async (req, res) => {
-  const update = req.body;
-
-  try {
-    const result = await transactionModel.addTransaction(update);
-
-    if (result.matchedCount === 0) {
-      res.status(404).send('Trans not found');
-      return;
-    }
-
-    res.status(200).send('Tx updated successfully');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error updating tx in database');
-  }
-});
-*/
 
 module.exports = router;

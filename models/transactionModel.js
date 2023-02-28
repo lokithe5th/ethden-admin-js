@@ -23,10 +23,6 @@ class TransactionModel {
   async addTransaction(update) {
     console.log("in update")
     const result = await this.collection.insertOne(update);
-      //return result;
-    //let checkExists = this.collection.find({});
-    //if (checkExists == []) {
-    //}
     return result;
   }
 }
