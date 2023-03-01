@@ -5,6 +5,7 @@ const router = express.Router();
 const vendorModel = require('../models/vendorModel');
 
 router.get('/', async (req, res) => {
+  console.log("GET vendors")
   try {
     const vendors = await vendorModel.getAllVendors();
     res.json(vendors);
@@ -30,7 +31,7 @@ router.put('/resetPayouts/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  console.log("incoming request");
+  console.log("payout request");
   const id = req.params.id;
   const update = req.body;
 
