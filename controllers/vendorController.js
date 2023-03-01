@@ -68,7 +68,6 @@ router.put('/resetPayouts/:id', async (req, res) => {
   try {
     const result = await vendorModel.resetPayouts();
     res.status(200).send('Vendors reset successfully');
-
   } catch (err) {
     console.error(err);
     res.status(500).send('Error reset vendor in database');
@@ -100,7 +99,7 @@ router.put('/updates/balances', async (req, res) => {
 
   if (result) {
     res.status(200);
-    console.log("Balances udpated");
+    console.log("Balances updated");
   } else {
     res.status(500).send('Error updating balances');
   }
