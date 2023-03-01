@@ -14,5 +14,5 @@ app.use('/vendors', vendorController);
 app.use('/transactions', transactionController);
 
 app.listen(process.env.PORT, () => {
-  console.log(`App listening at :${port}`);
+  console.log(`App listening at :${process.env.PORT}`);
 });
