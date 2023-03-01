@@ -35,6 +35,20 @@ vendors = [
   "0x31edd5a882583cbf3a712e98e100ef34ad6934b4"
 ]
 
+async function updateBalances() {
+  const vendors = await vendorModel.getAllVendors();
+
+  try {
+    for (let i=0; i < vendors.length; i++) {
+      let balance = await contract.balanceOf(vendors[i].address);
+      await vendorModel.updateBalance(vendors[i]._id, { currentBalance: balance });
+    }
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 router.get('/', async (req, res) => {
   console.log("GET vendors")
   try {
@@ -82,7 +96,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.put('/updates/balances', async (req, res) => {
-  const result = await vendorModel.updateBalances();
+  const result = await updateBalances();
 
   if (result) {
     res.status(200);
