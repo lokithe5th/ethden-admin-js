@@ -36,6 +36,12 @@ class VendorModel {
 
     console.log("Reset Successful")
   }
+
+  async updateBalance(id, update) {
+    const recordId = new ObjectId(id);
+    const result = await this.collection.updateOne({ _id: recordId }, { $set: update });
+    return result;
+  }
 }
 
 module.exports = new VendorModel();
