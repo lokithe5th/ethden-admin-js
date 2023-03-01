@@ -8,7 +8,7 @@ const erc20 = require('../abi/ERC20.json');
 
 // Let's listen for more events - is this better taken care of on the front end?
 const provider = new ethers.JsonRpcProvider("https://zksync2-mainnet.zksync.io");
-const buidlTokenAddress = '0xEd0994232328B470d44a88485B430b8bA965D434'
+const buidlTokenAddress = '0x1bbA25233556a7C3b41913F35A035916DbeD1664'
 const transferEvent = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 const contract = new ethers.Contract(buidlTokenAddress, erc20, provider);
 
