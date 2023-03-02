@@ -11,6 +11,7 @@ class VendorModel {
       .then(client => {
         const db = client.db();
         this.collection = db.collection('payments');
+        this.payoutRecord = db.collection('payoutRecords');
       })
       .catch(err => console.error(err));
   }
@@ -23,6 +24,13 @@ class VendorModel {
   async updateVendor(id, update) {
     //  `update` should be in the format `{payoutsReceived: $value}`
     const recordId = new ObjectId(id);
+    const vendor = await this.collection.findOne({ _id: recordId});
+    const payoutAmount = update.payoutsReceived - vendor.payoutsReceived;
+    console.log("ID: ",id,"Payout amount: ", payoutAmount);
+
+    const resultPayoutRecord = await this.payoutRecord.insertOne({ "vendor" : vendor.address, "payout" : payoutAmount});
+    console.log(resultPayoutRecord);
+
     const result = await this.collection.updateOne({ _id: recordId }, { $set: update });
     return result;
   }
