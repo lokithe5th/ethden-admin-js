@@ -28,7 +28,7 @@ class VendorModel {
     const payoutAmount = update.payoutsReceived - vendor.payoutsReceived;
     console.log("ID: ",id,"Payout amount: ", payoutAmount);
 
-    const resultPayoutRecord = await this.payoutRecord.insertOne({ "vendor" : vendor.address, "payout" : payoutAmount});
+    const resultPayoutRecord = await this.payoutRecord.insertOne({ "vendor" : vendor.address, "name" : vendor.name, "payout" : payoutAmount});
     console.log(resultPayoutRecord);
 
     const result = await this.collection.updateOne({ _id: recordId }, { $set: update });
